@@ -9,8 +9,9 @@ class chat extends Controller
 {
     function main(){
         $obj = new chat_m;
-        $data = $obj->where(['from'=>auth()->user()->id , 'to' => request('friend') ] )
-        ->orwhere(['to'=>auth()->user()->id , 'to' => request('friend')] )->get();
+        $data = $obj->where( 'from' , auth()->user()->id )
+        ->where( 'to' , request('friend') )
+        ->orwhere( 'from' , request('friend') )->where('to' , auth()->user()->id)->get();
 
         return view('social/chat' , compact('data'));
     }
@@ -40,7 +41,7 @@ class chat extends Controller
         $obj = new chat_m;
         $obj->create($data);
 
-        return redirect('social/chat');
+        return redirect('social/chat?friend='.request('friend'));
 
     }
 }

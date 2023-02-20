@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
    
-    <title>edit post</title>
+    <title>chat</title>
 
     
     <link href="{{ asset('../resources/css/site.css') }}" rel="stylesheet">
@@ -42,17 +42,22 @@
 <div style="background-color:gray;width:20%;border-radius:5px;display:inline-table;padding-left:10px;margin-top:5%;">
 @endif
  {{ $v->text }}
+
 </div><br>
+@if($v->pic)
+<img src="../pics/{{$v->pic}}" style="width: 150px;height:200px;border-radius:10%;"><br>
+@endif
+
 @endforeach
 
-<form action='send' style='display:inline-block'  enctype="multipart/form-data" method='post'>
+<form action='send' style='display:inline-block;margin-top:5%;'  enctype="multipart/form-data" method='post'>
 <input name='text'  > 
 <input type='file' name='pic'  > 
 <input type='submit' value='send'>
 {{ $errors->first('comment') }}
 {{ $errors->first('pic' ) }}
 <input hidden name="_token" value="{{ csrf_token() }}">
-<input hidden name="friend" value="{{ $v->user_info->pic }}">
+<input hidden name="friend" value="{{ request('friend') }}">
 
 </form>
 
