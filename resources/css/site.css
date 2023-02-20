@@ -41,6 +41,42 @@ th {border:1px solid black;border-collapse:collapse;background-color:gray;}
 
 .comment_button{border: none;outline: none; background: none;cursor:pointer}
 
+.edit2{display:none;text-decoration:none;margin-left: 40%;}
+
+.edit{margin-left:30%;border:none;outline: none;}
+
+.edit:hover{cursor: pointer;}
+
+.edit:hover .edit2 {
+    display: block;
+}
+
+
+.link{float:left;text-decoration:none;font-size:30px;margin-left:20px;}
+
+.link2{float:right;text-decoration:none;font-size:25px;margin-right:20px;}
+
+.home{float:right;text-decoration:none;font-size:30px;margin-right:20px;}
+
+.link:hover {background-color: gray;}
+
+.link2:hover {background-color: gray;}
+
+.home:hover {background-color: gray;}
+
+.editProfileForm{position:fixed;height:100%; left:0;top:35px;width:100%;background-color: #03f9ff;border-radius: 10px;
+ padding-top:10%;padding-left:30%;font-size:20px ;display: none;}
+
+.sub_button{margin-left: 150px;background-color: green;border:none;height:5%;font-size:20px;}
+.sub_button:hover{cursor: pointer;background-color: #02ff02;}
+
+.sub_button2{margin-left: 50px;background-color: #9f0202;border:none;height:5%;font-size:20px;}
+.sub_button2:hover{cursor: pointer;background-color: red;}
+
+.user_info{color:#ff00d4;font-size:25px;}
+
+.setting_img{width:20vw;height:40vh;}
+
 
 
 

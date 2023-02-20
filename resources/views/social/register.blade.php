@@ -44,9 +44,19 @@
 
 {!! Form::open(['url' => 'social/register' , 'class'=>'form1' , 'files'=>true]) !!}
 
-{!! Form::label('name : ' , '',['class'=>'label']) !!}<br>
+{!! Form::label('first name : ' , '',['class'=>'label']) !!}<br>
 
-{!! Form::text('name',old('name'),['class'=>'input']) !!} <span style='color:red;'>{!! $errors->first('name') !!}
+{!! Form::text('fname',old('fname'),['class'=>'input']) !!} <span style='color:red;'>{!! $errors->first('fname') !!}
+{{ session()->get('err') }}</span><br>
+
+{!! Form::label('last name : ' , '',['class'=>'label']) !!}<br>
+
+{!! Form::text('lname',old('lname'),['class'=>'input']) !!} <span style='color:red;'>{!! $errors->first('lname') !!}
+{{ session()->get('err') }}</span><br>
+
+{!! Form::label('birth date : ' , '',['class'=>'label']) !!}<br>
+
+{!! Form::date('birthDate',old('birthDate'),['class'=>'input']) !!} <span style='color:red;'>{!! $errors->first('birthDate') !!}
 {{ session()->get('err') }}</span><br>
 
 {!! Form::label('email : ', '',['class'=>'label']) !!}<br>

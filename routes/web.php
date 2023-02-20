@@ -5,6 +5,7 @@ use App\Http\Controllers\testm;
 use App\Http\Controllers\sendEmail;
 use App\Http\Controllers\posts;
 use App\Http\Controllers\comment;
+use App\Http\Controllers\chat;
 use App\Models\User;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 
@@ -48,18 +49,29 @@ Route::post('reset/password',[sendEmail::class,'reset'] );
 //////////////////////////// social ////////////////////////////////////
 
 route::group(['middleware'=>'social'],function(){
+
 route::get('social/home',[posts::class,'main']);
 route::post('social/home',[posts::class,'add']);
 route::post('social/add_comment',[comment::class , 'add']);
 route::get('social/myinfo',[posts::class,'profile']);
+route::get('social/editpost',[posts::class,'editpost']);
+route::post('social/editpost',[posts::class,'modify']);
+route::get('social/setting',[posts::class,'setting']);
+route::post('social/editprofile',[posts::class,'editprofile']);
+route::get('social/chat',[chat::class , 'main']);
+route::post('social/send',[chat::class , 'send']);
+
 });
 
+
 route::group(['middleware'=>'admin'],function(){
+
 route::view('social/login','social/login');
 route::post('social/login',[posts::class,'login']);
 
 route::view('social/register','social/register');
 route::post('social/register',[posts::class,'register']);
+
 });
 
 route::get('social/logout',[posts::class,'logout']);

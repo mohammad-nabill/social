@@ -18,11 +18,11 @@
 
 <div class="nav">
 
-<span class="font" >Welcome</span>
-<span style="margin-left:10px;font-size:25px;color:blue;user-select:none;"> Today is : {{ \Carbon\Carbon::now()->format('D d/m/Y') }}</span>  
 
-<a href="logout" style="float:left;text-decoration:none;font-size:30px;margin-left:20px;">logout</a>
-<a href="myinfo"><span style="color:#86ff01;float:left;font-size:30px;margin-left:20px;"> ● {{ auth()->user()->name }}</span></a>
+<a href="logout" class="link" >logout</a>
+<a href="setting" class="link2" > &#9881; setting</a>
+<a href="myinfo"><span style="color:#86ff01;float:left;font-size:30px;margin-left:20px;"> ● {{ auth()->user()->fname }}</span></a>
+
 
 </div>
 
@@ -55,7 +55,7 @@
 <input hidden name="id" value="{{  $v->author->id }}">
 
 <img src="../pics/{{ $v->author->pic }}" style="width: 50px;height:50px;border-radius:60%;">
-<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $v->author->name }}</span>
+<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $v->author->fname }} {{ $v->author->lname }}</span>
 
 
 
@@ -111,7 +111,7 @@
 
 <div style="background-color:gray;width:20%;border-radius:5px;display:inline-table;padding-left:10px;">
 
-<span style="font-size:20px;font-weight:bold;">{{$comment->author_name->name}}</span><br>
+<span style="font-size:20px;font-weight:bold;">{{$comment->author_name->fname}} {{$comment->author_name->lname}}</span><br>
 {{$comment->comment}} <br>
 
 @if($comment->pic)
@@ -124,8 +124,8 @@
 </div>
 
 
-<img src="../pics/{{ auth()->user()->pic }}" style="width: 30px;height:30px;border-radius:60%;">
-<span style="font-size:15px;font-weight:bold;">{{ auth()->user()->name }} : </span>
+<img src="../pics/{{ auth()->user()->pic }}" style="width: 30px;height:30px;border-radius:60%;"> :
+
 
 
 
@@ -149,20 +149,20 @@
 <div style="position:fixed;top:35px;right:0px; width:25%;height:100%;background-color:gray; ">
 
 @foreach (auth()->user()->all() as $user) 
-<form action="myinfo">
-  <input hidden name="id" value="{{ $user->id }}">
+<form action="chat">
+  <input hidden name="friend" value="{{ $user->id }}">
  @if (Cache::has('online-'.$user->id) )
 
 <div style="">
 <button class="prof_button"><img src="../pics/{{ $user->pic }}" style="width: 50px;height:50px;border-radius:60%;">
-<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->name }} 
+<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }}
 <span style="color:#86ff01;">●</span></span></button>
 </div> 
 <hr>
 
 @else
 <button class="prof_button"><img src="../pics/{{ $user->pic }}" style="width: 50px;height:50px;border-radius:60%;">
-<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->name }} </span></button>
+<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }} </span></button>
 <hr>
 
   

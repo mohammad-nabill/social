@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
    
-    <title>Home</title>
+    <title>edit post</title>
 
     
     <link href="{{ asset('../resources/css/site.css') }}" rel="stylesheet">
@@ -15,20 +15,21 @@
 <body>
   <!-----------------------------Nav bar----------------------------------->
 
-<div class="nav">
-  
-<a href="logout" class="link" >logout</a>
-<a href="setting" class="link2" > &#9881; setting</a>
-<a href="home" class="home">Home</a>
-<a href="myinfo"><span style="color:#86ff01;float:left;font-size:30px;margin-left:20px;"> ● {{ auth()->user()->fname }}</span></a>
 
-</div>
+  <div class="nav">
+  
+  <a href="logout" class="link" >logout</a>
+  <a href="setting" class="link2" > &#9881; setting</a>
+  <a href="home" class="home">Home</a>
+  <a href="myinfo"><span style="color:#86ff01;float:left;font-size:30px;margin-left:20px;"> ● {{ auth()->user()->fname }} </span></a>
+  
+  </div>
 
 
 
 <!----------------------------------------------------------------------------------->
 
-@foreach($posts as $v)
+@foreach($post as $v)
 
 
 <hr style="height:5px;background-color:gray;margin-top:40px;">
@@ -64,34 +65,15 @@
 
 </div></button></form>
 
-@if(auth()->user()->id == $v->author_id )
-
-<form action="editpost" style="display:inline" >
-
-  <select name="action" onchange="this.form.submit()" class="edit">
-    <option disabled selected value >...</option>
-    <option value="edit">Edit</option>
-  </select>
-  
-  <input hidden name="id" value="{{$v->id}}">
-  
-</form>
-
-<form action="editpost" style="display:inline" onsubmit="return confirmation()">
-  <input hidden name="action" value="delete">
-  <input hidden name="id" value="{{$v->id}}">
-  <input type="submit" value="delete">
-  
-</form>
-
-@endif
 
 <div style="margin-top:10px">
 
-<div style="font-size:40px;width:50%;color:red">
-  {{ $v->subject }}
+<form action="editpost" method="post" enctype="multipart/form-data" >
+<div style="width:50%;">
+  <textarea style="width: 50%;height:100px;overflow:auto;" name="subject" >{{ $v->subject }}</textarea><br>
   </div> <br>
   
+ 
   
 
 </div>
@@ -99,57 +81,22 @@
 <img src="../pics/{{ $v->pic }}" style="width:50%;"><br>
 @endif
 
-<span>-----------------------------------------------------------------------------</span><br>
+uplaod/change post photo : <input type="file" name="file" > 
 
-<button class='comment_button' onclick="show({{$v->id}})">{{ $v->comments_count }} comments</button><br>
-
-<span>-----------------------------------------------------------------------------</span><br>
-<!--<a id='position{{ $v->id }}'></a>-->
-
-<div id='comment_container{{$v->id}}' style="display:none">
-@foreach($v->comments as $comment)
-
-<form action="myinfo" style="display:inline">
-<button class="prof_button">
-  <img src="../pics/{{$comment->author_name->pic}}" style="width: 30px;height:30px;border-radius:60%;">
-</button>
-<input hidden name="id" value="{{  $comment->author_name->id }}">
-</form>
-
-<div style="background-color:gray;width:20%;border-radius:5px;display:inline-table;padding-left:10px;">
-
-<span style="font-size:20px;font-weight:bold;">{{$comment->author_name->fname}} {{$comment->author_name->lname }}</span><br>
-{{$comment->comment}} <br>
-
-@if($comment->pic)
-<img src="../pics/{{$comment->pic}}" style="width: 150px;height:200px;border-radius:10%;">
+@if($v->pic)
+or <input type="checkbox" name="deletePhoto"> delete current photo  
 @endif
 
-</div> {{$comment->created_at->format('d-M  h A')}} <br><br>
+<br><br>
+
+<input type="submit" value="modify" style="margin-left:10%;" > <span style="color:red"> {{session()->get('errore') }} </span>
+<input hidden name="_token" value="{{ csrf_token() }}">
+<input hidden name="id" value="{{ $v->id }}"> 
+</form>
 
 @endforeach
 </div>
 
-
-<img src="../pics/{{ auth()->user()->pic }}" style="width: 30px;height:30px;border-radius:60%;">
-<span style="font-size:15px;font-weight:bold;">{{ auth()->user()->name }} : </span>
-
-
-
-<form action='add_comment' style='display:inline-block' onsubmit='return check( {{ $v->id }} )'  enctype="multipart/form-data" method='post'>
-<input name='comment' id='comment{{$v->id}}' >
-<input type='file' name='pic' id='pic{{$v->id}}' >
-<input hidden name='post_id' value={{ $v->id }} >
-<input hidden name='author_id' value={{ auth()->user()->id }} >
-<input type='submit' value='add'>
-<input hidden name="_token" value="{{ csrf_token() }}">
-@if( session('post') == $v->id  ) <span style="color:red">{{ $errors->first('comment','write something or upload photo') }}</span>  @endif
-
-</form>
-
-
-
-@endforeach
 
 
 <!----------------------------- side bar ------------------------------------->
@@ -163,14 +110,14 @@
 
 <div style="">
 <button class="prof_button"><img src="../pics/{{ $user->pic }}" style="width: 50px;height:50px;border-radius:60%;">
-<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }}
+<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }} 
 <span style="color:#86ff01;">●</span></span></button>
 </div> 
 <hr>
 
 @else
 <button class="prof_button"><img src="../pics/{{ $user->pic }}" style="width: 50px;height:50px;border-radius:60%;">
-<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }} </span></button>
+<span style="font-size:20px;font-weight:bold;position:absolute;">{{ $user->fname }} {{ $user->lname }}</span></button>
 <hr>
 
   
@@ -262,17 +209,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             }
         });
 
-//////////////////////////////////////////////////////////////////////
 
-function confirmation(){
- 
-  if(confirm('Are you sure deleting this post ? ')){
- 
-  }else{
-    return false;
-  }
-
-}
 
 
 
